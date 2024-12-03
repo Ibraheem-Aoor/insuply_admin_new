@@ -3,9 +3,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap");
 :root {
     /* --primary-clr: #24bac3; */
-    --primary-clr: #107980;
-    --secondary-clr: #99a7ba;
-    --primary: #006161;
+    --primary-clr: #ff8a00;
+    --secondary-clr: #fff;
+    --primary: #ff8a00;
     --title-clr: #334257;
     --dark-clr: #005555;
     --base-clr: #2aa26a;
