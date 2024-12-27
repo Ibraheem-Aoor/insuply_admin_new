@@ -30,7 +30,7 @@ $countryCode= strtolower($country?$country->value:'auto');
     <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/theme.minc619.css?v=1.0">
     <link rel="stylesheet" href="{{asset('public/assets/admin/css/emogi-area.css')}}">
-    <link rel="stylesheet" href="{{asset('public/assets/admin/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/admin/css/style.css?v=1.0') }}">
     <link rel="stylesheet" href="{{asset('public/assets/admin/intltelinput/css/intlTelInput.css')}}">
     <link rel="stylesheet" href="{{asset('public/assets/admin/css/owl.min.css')}}">
     @stack('css_or_js')
