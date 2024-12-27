@@ -97,13 +97,18 @@ trait  SmsGateway
             $token = $config['token'];
             try {
                 $twilio = new Client($sid, $token);
-                $twilio->messages
-                    ->create($receiver, // to
-                        array(
-                            "messagingServiceSid" => $config['messaging_service_sid'],
-                            "body" => $message
-                        )
-                    );
+                $twilio->verify
+                ->services($config['messaging_service_sid'])
+                ->verifications
+                ->create($receiver, "sms");
+                // deprecate messaging services and use verify instead.
+                // $twilio->messages
+                //     ->create($receiver, // to
+                //         array(
+                //             "messagingServiceSid" => $config['messaging_service_sid'],
+                //             "body" => $message
+                //         )
+                //     );
                 $response = 'success';
             } catch (\Exception $exception) {
                 $response = 'error';
