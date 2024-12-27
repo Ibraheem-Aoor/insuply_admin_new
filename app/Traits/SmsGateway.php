@@ -100,7 +100,7 @@ trait  SmsGateway
                 $twilio->verify
                 ->services($config['messaging_service_sid'])
                     ->verifications
-                ->create($receiver, "sms");
+                ->create(to: $receiver, channel: "sms" , options:["customCode" => $otp]);
                 // deprecate messaging services and use verify instead.
                 // $twilio->messages
                 //     ->create($receiver, // to
