@@ -46,13 +46,18 @@ class SMS_module
             $token = $config['token'];
             try {
                 $twilio = new Client($sid, $token);
-                $twilio->messages
-                    ->create($receiver, // to
-                        array(
-                            "messagingServiceSid" => $config['messaging_service_sid'],
-                            "body" => $message
-                        )
-                    );
+                $twilio->verify
+                ->services($config['messaging_service_sid'])
+                    ->verifications
+                ->create(to: $receiver, channel: "sms" , options:["customCode" => $otp]);
+                // $twilio = new Client($sid, $token);
+                // $twilio->messages
+                //     ->create($receiver, // to
+                //         array(
+                //             "messagingServiceSid" => $config['messaging_service_sid'],
+                //             "body" => $message
+                //         )
+                //     );
                 $response = 'success';
             } catch (\Exception $exception) {
                 $response = 'error';
