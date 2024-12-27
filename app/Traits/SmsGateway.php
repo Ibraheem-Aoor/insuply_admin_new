@@ -7,6 +7,7 @@ use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client as HpptClient;
 use App\Models\Setting;
+use Illuminate\Support\Facades\Log;
 
 trait  SmsGateway
 {
@@ -111,6 +112,7 @@ trait  SmsGateway
                 //     );
                 $response = 'success';
             } catch (\Exception $exception) {
+                Log::error($exception->getMessage());
                 $response = 'error';
             }
         }
