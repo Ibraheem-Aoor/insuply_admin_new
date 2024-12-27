@@ -3,6 +3,7 @@
 namespace App\CentralLogics;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
 
 class SMS_module
@@ -60,6 +61,7 @@ class SMS_module
                 //     );
                 $response = 'success';
             } catch (\Exception $exception) {
+                Log::error($exception->getMessage());
                 $response = 'error';
             }
         }
