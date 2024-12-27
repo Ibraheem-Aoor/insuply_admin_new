@@ -99,7 +99,7 @@ trait  SmsGateway
                 $twilio = new Client($sid, $token);
                 $twilio->verify
                 ->services($config['messaging_service_sid'])
-                ->verifications
+                    ->verifications
                 ->create($receiver, "sms");
                 // deprecate messaging services and use verify instead.
                 // $twilio->messages
