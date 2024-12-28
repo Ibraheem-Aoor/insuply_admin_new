@@ -29,5 +29,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'moyassar' => [
+        'api_key' => env('MOYASSAR_API_KEY'),
+        'published_key' => env('MOYASSAR_PUBLISHED_KEY'),
+    ],
 
 ];
