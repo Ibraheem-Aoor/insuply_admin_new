@@ -837,7 +837,6 @@ class BusinessSettingsController extends Controller
 
     public function payment_update(Request $request, $name)
     {
-        // dd($name);
         if (env('APP_MODE') == 'demo') {
             Toastr::info(translate('messages.update_option_is_disable_for_demo'));
             return back();
@@ -1164,6 +1163,12 @@ class BusinessSettingsController extends Controller
                 'client_secret' => 'required_if:status,1'
             ];
         } elseif ($request['gateway'] == 'stripe') {
+            $additional_data = [
+                'status' => 'required|in:1,0',
+                'api_key' => 'required_if:status,1',
+                'published_key' => 'required_if:status,1',
+            ];
+        }elseif ($request['gateway'] == 'moyassar') {
             $additional_data = [
                 'status' => 'required|in:1,0',
                 'api_key' => 'required_if:status,1',
