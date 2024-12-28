@@ -31,14 +31,14 @@ class PaymentMethodSeeder extends Seeder
             'key_name' => 'moyassar',
         ], [
             'key_name' => 'moyassar',
-            'live_values' => json_encode([
+            'live_values' => ([
                 'gateway' => 'moyassar',
                 'mode' => 'live',
                 'status' => 0,
                 'api_key' => null,
                 'published_key' => null,
             ]),
-            'test_values' => json_encode([
+            'test_values' => ([
                 'gateway' => 'moyassar',
                 'mode' => 'test',
                 'status' => 1,
