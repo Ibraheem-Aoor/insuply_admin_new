@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PaymentRequest;
 use App\Traits\Processor;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Razorpay\Api\Api;
+use Throwable;
 
 class MoyassarPaymentController extends Controller
 {
@@ -75,43 +78,60 @@ class MoyassarPaymentController extends Controller
         return view('payment-views.moyassar', compact('data', 'payer', 'business_logo', 'business_name'));
     }
 
-    public function payment(Request $request): JsonResponse|Redirector|RedirectResponse|Application
-    {
-        dd($request->toArray());
-        // $input = $request->all();
-        // $api = new Api(config('razor_config.api_key'), config('razor_config.api_secret'));
-        // $payment = $api->payment->fetch($input['razorpay_payment_id']);
 
-        // if (count($input) && !empty($input['razorpay_payment_id'])) {
-        //     $response = $api->payment->fetch($input['razorpay_payment_id'])->capture(array('amount' => $payment['amount'] - $payment['fee']));
-        //     $this->payment::where(['id' => $request['payment_id']])->update([
-        //         'payment_method' => 'razor_pay',
-        //         'is_paid' => 1,
-        //         'transaction_id' => $input['razorpay_payment_id'],
-        //     ]);
-        //     $data = $this->payment::where(['id' => $request['payment_id']])->first();
-        //     if (isset($data) && function_exists($data->success_hook)) {
-        //         call_user_func($data->success_hook, $data);
-        //     }
-        //     return $this->payment_response($data, 'success');
-        // }
-        // $payment_data = $this->payment::where(['id' => $request['payment_id']])->first();
-        // if (isset($payment_data) && function_exists($payment_data->failure_hook)) {
-        //     call_user_func($payment_data->failure_hook, $payment_data);
-        // }
-        // return $this->payment_response($payment_data, 'fail');
-    }
     public function callback(Request $request): JsonResponse|Redirector|RedirectResponse|Application
     {
-        dd($request->toArray());
-        // $input = $request->all();
-        // if (count($input) && !empty($input['razorpay_payment_id'])) {
-        //     $data = $this->payment::where(['transaction_id' => $request['razorpay_payment_id']])->first();
-        //     if (isset($data) && function_exists($data->success_hook)) {
-        //         call_user_func($data->success_hook, $data);
-        //     }
-        //     return $this->payment_response($data, 'success');
-        // }
-        // return redirect()->route('payment-fail');
+        try {
+            $input = $request->all();
+            if (
+                count($input)
+                && !empty($input['id'])
+                && isset($input['status'])
+                && $this->confirmMoyasserPayment(moyassar_payment_id: $input['id'], payment_id: $input['payment_id'])
+            ) {
+                $data = $this->payment::where(['id' => $request['payment_id']])->first();
+                if (isset($data) && function_exists($data->success_hook)) {
+                    call_user_func($data->success_hook, $data);
+                }
+                return $this->payment_response($data, 'success');
+            }
+            $payment_data = $this->payment::where(['id' => $request['payment_id']])->first();
+            if (isset($payment_data) && function_exists($payment_data->failure_hook)) {
+                call_user_func($payment_data->failure_hook, $payment_data);
+            }
+            return $this->payment_response($payment_data, 'fail');
+
+        } catch (Throwable $e) {
+            Log::error('Error In: ' . __METHOD__ . ' ERROR:' . $e->getMessage());
+            return redirect()->route('payment-fail');
+        }
+    }
+
+
+    private function confirmMoyasserPayment($moyassar_payment_id, $payment_id): bool
+    {
+        try {
+            $response = Http::withBasicAuth('sk_your_key', config('moyassar.published_key'))
+                ->get("https://api.moyasar.com/v1/payments/{$moyassar_payment_id}");
+            if ($response->successful()) {
+                $data = $response->json();
+                $is_paid = 0;
+                $transaction_id = $data['id'];
+                if ($response['status'] == 'paid') {
+                    $is_paid = 1;
+                    $transaction_id = $data['id'];
+                }
+                $this->payment::where(['id' => $payment_id])->update([
+                    'payment_method' => 'moyassar',
+                    'is_paid' => $is_paid,
+                    'transaction_id' => $transaction_id,
+                ]);
+                return $is_paid;
+            }
+            return false;
+        } catch (Throwable $e) {
+            Log::error('Error In: ' . __METHOD__ . ' ERROR:' . $e->getMessage());
+            return false;
+        }
     }
 }
