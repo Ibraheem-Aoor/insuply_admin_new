@@ -60,7 +60,7 @@ class MoyassarPaymentController extends Controller
             return response()->json($this->response_formatter(GATEWAYS_DEFAULT_400, null, $this->error_processor($validator)), 400);
         }
 
-        $data = $this->payment::where(['id' => $request['payment_id']])->where(['is_paid' => 0])->first();
+        $data = $this->payment::where(['id' => $request['payment_id']])->where(['is_paid' => 0 , 'payment_method' => 'moyassar'])->first();
         if (!isset($data)) {
             return response()->json($this->response_formatter(GATEWAYS_DEFAULT_204), 200);
         }
@@ -112,7 +112,7 @@ class MoyassarPaymentController extends Controller
     private function confirmMoyasserPayment($moyassar_payment_id, $payment_id): bool
     {
         try {
-            $response = Http::withBasicAuth('sk_your_key', Config::get('moyassar_config.published_key'))
+            $response = Http::withBasicAuth('sk_your_key', Config::get('moyassar_config.api_key'))
                 ->get("https://api.moyasar.com/v1/payments/{$moyassar_payment_id}");
                 dd($response->json());
             if ($response->successful()) {
