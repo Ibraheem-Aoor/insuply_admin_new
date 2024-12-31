@@ -12,6 +12,7 @@ use App\Http\Controllers\SenangPayController;
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\BkashPaymentController;
 use App\Http\Controllers\FlutterwaveV3Controller;
+use App\Http\Controllers\MoyassarPaymentController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\SslCommerzPaymentController;
@@ -107,6 +108,15 @@ if (!$is_published) {
             Route::post('payment', [RazorPayController::class, 'payment'])->name('payment')
                 ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
             Route::post('callback', [RazorPayController::class, 'callback'])->name('callback')
+                ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+        });
+
+        //MOYASSAR-PAY
+        Route::group(['prefix' => 'moyassar', 'as' => 'moyassar.'], function () {
+            Route::get('pay', [RazorPayController::class, 'index']);
+            Route::post('payment', [MoyassarPaymentController::class, 'payment'])->name('payment')
+                ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+            Route::get('callback', [MoyassarPaymentController::class, 'callback'])->name('callback')
                 ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
         });
 
