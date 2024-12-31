@@ -102,7 +102,6 @@ class MoyassarPaymentController extends Controller
             return $this->payment_response($payment_data, 'fail');
 
         } catch (Throwable $e) {
-            dd($e->getMessage());
             Log::error('Error In: ' . __METHOD__ . ' ERROR:' . $e->getMessage());
             return redirect()->route('payment-fail');
         }
@@ -131,7 +130,6 @@ class MoyassarPaymentController extends Controller
             }
             return false;
         } catch (Throwable $e) {
-            dd($e->getMessage());
             Log::error('Error In: ' . __METHOD__ . ' ERROR:' . $e->getMessage());
             return false;
         }
