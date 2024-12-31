@@ -112,6 +112,7 @@ class MoyassarPaymentController extends Controller
     private function confirmMoyasserPayment($moyassar_payment_id, $payment_id): bool
     {
         try {
+            dd(Config::get('moyassar_config.api_key'));
             $response = Http::withBasicAuth('sk_your_key', Config::get('moyassar_config.api_key'))
                 ->get("https://api.moyasar.com/v1/payments/{$moyassar_payment_id}");
                 dd($response->json());
