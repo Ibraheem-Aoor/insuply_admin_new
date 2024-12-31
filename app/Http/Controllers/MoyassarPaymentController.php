@@ -114,6 +114,7 @@ class MoyassarPaymentController extends Controller
         try {
             $response = Http::withBasicAuth('sk_your_key', Config::get('moyassar_config.published_key'))
                 ->get("https://api.moyasar.com/v1/payments/{$moyassar_payment_id}");
+                dd($response->json());
             if ($response->successful()) {
                 $data = $response->json();
                 $is_paid = 0;
