@@ -34,7 +34,8 @@ $countryCode= strtolower($country?$country->value:'auto');
     <link rel="stylesheet" href="{{asset('public/assets/admin/intltelinput/css/intlTelInput.css')}}">
     <link rel="stylesheet" href="{{asset('public/assets/admin/css/owl.min.css')}}">
     @stack('css_or_js')
-
+     {{-- Custom Css --}}
+     @include('layouts.common.css.custom')
     <script src="{{asset('public/assets/admin')}}/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js"></script>
     <link rel="stylesheet" href="{{asset('public/assets/admin')}}/css/toastr.css">
 </head>

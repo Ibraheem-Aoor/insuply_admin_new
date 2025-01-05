@@ -18,7 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+     {{-- Custom Css --}}
+     @include('layouts.common.css.custom')
 
 </head>
 <body>
