@@ -6327,4 +6327,6 @@ Smartly or Earn. ',
   'Set_a_default_âCommission_Rateâ_for_freelance_deliverymen_(under_admin)_on_every_deliveryman.' => 'Set a default âCommission Rateâ for freelance deliverymen (under admin) on every deliveryman.',
   'Want_to_enable_Withdraw_approve_mail' => 'Want to enable Withdraw approve mail',
   'coupon_usage_limit_over' => 'Coupon usage limit over',
+  'moyassar' => 'Moyassar',
+  'order_note' => 'Order note',
 );
