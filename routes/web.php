@@ -118,7 +118,7 @@ if (!$is_published) {
                 ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
             Route::get('callback', [MoyassarPaymentController::class, 'callback'])->name('callback')
                 ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-            Route::get('test' , [MoyassarPaymentController::class  , 'test']);
+            // Route::get('test' , [MoyassarPaymentController::class  , 'test']);
         });
 
         //PAYPAL
