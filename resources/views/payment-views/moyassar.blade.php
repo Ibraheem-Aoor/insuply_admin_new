@@ -20,7 +20,7 @@
             description: "{{ $data->payment_amount }}",
             publishable_api_key: "{{ config()->get('moyassar_config.published_key') }}",
             callback_url: "{{ route('moyassar.callback', ['payment_id' => $data->id]) }}",
-            methods: ['creditcard']
+            methods: ['creditcard' , 'applepay']
         })
     </script>
 @endsection
