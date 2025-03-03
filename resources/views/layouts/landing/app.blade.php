@@ -38,6 +38,8 @@ $countryCode= strtolower($country?$country->value:'auto');
             }
         </style>
     @endif
+     {{-- Custom Css --}}
+     @include('layouts.common.css.custom')
 </head>
 
 <body>
