@@ -134,4 +134,10 @@ class MoyassarPaymentController extends Controller
             return false;
         }
     }
+
+
+    public function test()
+    {
+        return  redirect()->route('moyassar.index', ['payment_id' => $this->payment::query()->latest()->first()]);
+    }
 }
