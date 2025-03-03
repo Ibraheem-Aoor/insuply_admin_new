@@ -24,6 +24,7 @@
             apple_pay: {
             country: 'SA',
             label: "{{ config('app.name') }}",
+            validate_merchant_url: 'https://api.moyasar.com/v1/applepay/initiate',
         },
         })
     </script>
