@@ -113,7 +113,7 @@ if (!$is_published) {
 
         //MOYASSAR-PAY
         Route::group(['prefix' => 'moyassar', 'as' => 'moyassar.'], function () {
-            Route::get('pay', [MoyassarPaymentController::class, 'index']);
+            Route::get('pay', [MoyassarPaymentController::class, 'index'])->name('index');
             Route::post('payment', [MoyassarPaymentController::class, 'payment'])->name('payment')
                 ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
             Route::get('callback', [MoyassarPaymentController::class, 'callback'])->name('callback')
